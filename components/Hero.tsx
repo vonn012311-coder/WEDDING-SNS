@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { weddingConfig } from "@/config";
 
@@ -37,7 +38,7 @@ export default function Hero() {
           variants={itemVariants}
           className="flex items-center gap-3 mb-7"
         >
-          <span className="flex-1 h-px w-10 bg-gradient-to-r from-transparent to-gold-400" />
+          <span className="flex-1 h-px w-10 bg-gradient-to-r from-transparent to-[#C9A84C]" />
           <div className="flex items-center gap-1.5">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path
@@ -88,6 +89,31 @@ export default function Hero() {
             {weddingDate}
           </span>
           <span className="w-8 h-px bg-[#cfc08f]/50" />
+        </motion.div>
+
+        {/* ── Couple Photo ── */}
+        <motion.div
+          variants={itemVariants}
+          className="relative w-full max-w-sm sm:max-w-md mb-8"
+        >
+          {/* Outer glow ring */}
+          <div className="absolute -inset-[5px] rounded-[28px] bg-gradient-to-br from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] opacity-60 blur-[2px]" />
+          {/* Inner gold border */}
+          <div className="absolute -inset-[2px] rounded-3xl border border-[#C9A84C]/50" />
+
+          {/* Photo */}
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+            <Image
+              src="/couple.png"
+              alt="Couple photo"
+              width={600}
+              height={400}
+              className="w-full h-[260px] sm:h-[320px] object-cover object-top"
+              priority
+            />
+            {/* Soft bottom vignette */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
+          </div>
         </motion.div>
 
         {/* ── Welcome message ── */}
