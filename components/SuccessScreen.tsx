@@ -20,14 +20,21 @@ async function launchConfetti() {
     const confetti = (await import("canvas-confetti")).default;
     const colors = ["#C9A84C", "#E8D5A3", "#E8A0B0", "#FFF0F3", "#FFFFFF"];
 
+    // Create custom flower shapes from text
+    const c = confetti as any;
+    const f1 = c.shapeFromText({ text: "❀" });
+    const f2 = c.shapeFromText({ text: "✿" });
+    const f3 = c.shapeFromText({ text: "❃" });
+    const shapes = [f1, f2, f3];
+
     // First burst
     confetti({
       particleCount: 80,
       spread: 70,
       origin: { x: 0.3, y: 0.5 },
       colors,
-      shapes: ["circle", "square"],
-      scalar: 0.9,
+      shapes,
+      scalar: 1.5,
     });
 
     setTimeout(() => {
@@ -36,19 +43,20 @@ async function launchConfetti() {
         spread: 70,
         origin: { x: 0.7, y: 0.5 },
         colors,
-        shapes: ["circle", "square"],
-        scalar: 0.9,
+        shapes,
+        scalar: 1.5,
       });
     }, 200);
 
     setTimeout(() => {
       confetti({
-        particleCount: 40,
+        particleCount: 45,
         spread: 120,
         origin: { x: 0.5, y: 0.4 },
         colors,
+        shapes,
         gravity: 0.8,
-        scalar: 0.7,
+        scalar: 1.2,
       });
     }, 400);
   } catch {
