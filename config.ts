@@ -20,7 +20,7 @@ export const weddingConfig = {
   // Paste the Google Drive Folder ID here.
   // You can find it in the folder's URL:
   // https://drive.google.com/drive/folders/<FOLDER_ID>
-  googleDriveFolderId: process.env.GOOGLE_DRIVE_FOLDER_ID ?? "YOUR_FOLDER_ID_HERE",
+  googleDriveFolderId: process.env.GOOGLE_DRIVE_FOLDER_ID ?? "1Q5-04R7QQlQRwM9FjO7A5xX6h7Zr_YmP",
 
   // ── Upload Limits ───────────────────────────────────────────
   maxUploadSizeMB: 20,
