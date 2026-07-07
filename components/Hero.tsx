@@ -65,7 +65,7 @@ export default function Hero() {
         {/* ── "of" script ── */}
         <motion.p
           variants={itemVariants}
-          className="font-script text-3xl sm:text-4xl text-[#d4a8b3] leading-tight mb-1"
+          className="font-script text-3xl sm:text-4xl text-[#C9A84C] leading-tight mb-1"
         >
           of
         </motion.p>
