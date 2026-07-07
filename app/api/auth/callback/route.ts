@@ -10,13 +10,8 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const oauth2Client = getOAuth2Client();
-
-    // Dynamically match the redirect URI of the request
-    const host = req.headers.get("host") || "localhost:3000";
-    const protocol = req.headers.get("x-forwarded-proto") || "http";
-    const redirectUri = `${protocol}://${host}/api/auth/callback`;
-    oauth2Client.redirectUri = redirectUri;
+    // Pass the request to dynamically set redirect URI in the constructor
+    const oauth2Client = getOAuth2Client(req);
 
     const { tokens } = await oauth2Client.getToken(code);
 

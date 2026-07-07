@@ -6,18 +6,22 @@
 
 import { google } from "googleapis";
 import { Readable } from "stream";
+import { NextRequest } from "next/server";
 
 // ── Initialize Google OAuth2 Client ─────────────────────────────────
-export function getOAuth2Client() {
+export function getOAuth2Client(req?: NextRequest) {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
   
-  // Set redirect URI based on environment
-  const redirectUri =
-    process.env.GOOGLE_REDIRECT_URI ||
-    (process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/api/auth/callback`
-      : "http://localhost:3000/api/auth/callback");
+  let redirectUri = process.env.GOOGLE_REDIRECT_URI;
+  if (!redirectUri && req) {
+    const host = req.headers.get("host") || "localhost:3000";
+    const protocol = req.headers.get("x-forwarded-proto") || "http";
+    redirectUri = `${protocol}://${host}/api/auth/callback`;
+  }
+  if (!redirectUri) {
+    redirectUri = "http://localhost:3000/api/auth/callback";
+  }
 
   if (!clientId || !clientSecret) {
     throw new Error(
@@ -36,6 +40,7 @@ export async function uploadFileToDrive(
   mimeType: string,
   folderId: string
 ): Promise<{ id: string; webViewLink: string }> {
+  // Pass no request to getOAuth2Client so it uses the configured REDIRECT_URI or fallback
   const oauth2Client = getOAuth2Client();
   const refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
 

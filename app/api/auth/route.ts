@@ -3,13 +3,8 @@ import { getOAuth2Client } from "@/lib/google-drive";
 
 export async function GET(req: NextRequest) {
   try {
-    const oauth2Client = getOAuth2Client();
-
-    // Use custom redirect URI if passed via query param (useful for local testing)
-    const host = req.headers.get("host") || "localhost:3000";
-    const protocol = req.headers.get("x-forwarded-proto") || "http";
-    const redirectUri = `${protocol}://${host}/api/auth/callback`;
-    oauth2Client.redirectUri = redirectUri;
+    // Pass the request to dynamically set redirect URI in the constructor
+    const oauth2Client = getOAuth2Client(req);
 
     const authUrl = oauth2Client.generateAuthUrl({
       access_type: "offline", // Required to get a refresh token
