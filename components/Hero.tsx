@@ -3,149 +3,101 @@
 import { motion } from "framer-motion";
 import { weddingConfig } from "@/config";
 
-// Decorative SVG elements
-const RingIcon = () => (
-  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-    <circle cx="28" cy="40" r="18" stroke="#C9A84C" strokeWidth="4" fill="none" />
-    <circle cx="52" cy="40" r="18" stroke="#E8D5A3" strokeWidth="4" fill="none" />
-    <circle cx="28" cy="40" r="10" stroke="#C9A84C" strokeWidth="1.5" fill="none" strokeDasharray="2 3" />
-    <circle cx="52" cy="40" r="10" stroke="#E8D5A3" strokeWidth="1.5" fill="none" strokeDasharray="2 3" />
-  </svg>
-);
-
-const FloralDecoration = () => (
-  <svg viewBox="0 0 120 30" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-32 h-8 opacity-60">
-    <path d="M10 15 Q20 5 30 15 Q20 25 10 15Z" fill="#E8A0B0" opacity="0.5" />
-    <path d="M20 15 Q30 5 40 15 Q30 25 20 15Z" fill="#C9A84C" opacity="0.4" />
-    <path d="M60 15 L55 10 M60 15 L65 10 M60 15 L55 20 M60 15 L65 20 M60 15 L50 15 M60 15 L70 15" stroke="#C9A84C" strokeWidth="1" strokeLinecap="round" />
-    <path d="M80 15 Q90 5 100 15 Q90 25 80 15Z" fill="#C9A84C" opacity="0.4" />
-    <path d="M90 15 Q100 5 110 15 Q100 25 90 15Z" fill="#E8A0B0" opacity="0.5" />
-  </svg>
-);
-
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
-};
-
-const ringVariants = {
-  hidden: { opacity: 0, scale: 0.6, rotate: -20 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    rotate: 0,
-    transition: { duration: 0.8, ease: "easeOut" },
+    transition: { duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] },
   },
 };
 
 export default function Hero() {
-  const { coupleName, weddingDate, venue, welcomeMessage } = weddingConfig;
+  const { coupleName, weddingDate, welcomeMessage } = weddingConfig;
   const [name1, name2] = coupleName.split(" & ");
 
   return (
-    <header className="relative overflow-hidden">
-      {/* Background gradient blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-blush-100 opacity-30 blur-3xl" />
-        <div className="absolute -top-16 -right-32 w-80 h-80 rounded-full bg-gold-100 opacity-20 blur-3xl" />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-48 bg-gradient-to-t from-cream-50 to-transparent" />
-      </div>
-
-      <div className="relative max-w-4xl mx-auto px-4 pt-16 pb-10 text-center">
+    <header className="relative pt-14 pb-10 px-5 text-center">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="flex flex-col items-center"
+      >
+        {/* ── "SCAN & SNAP" pill with heart ── */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col items-center gap-5"
+          variants={itemVariants}
+          className="flex items-center gap-3 mb-7"
         >
-          {/* Rings Icon */}
-          <motion.div
-            variants={ringVariants}
-            className="w-20 h-20 animate-float"
-            aria-hidden="true"
-          >
-            <RingIcon />
-          </motion.div>
-
-          {/* "Scan & Snap" tagline */}
-          <motion.p
-            variants={itemVariants}
-            className="font-script text-2xl text-gold-500 tracking-wide"
-          >
-            Scan & Snap
-          </motion.p>
-
-          {/* Couple Names */}
-          <motion.div variants={itemVariants} className="flex flex-col items-center gap-1">
-            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight">
-              <span className="text-gold-gradient">{name1}</span>
-              <span className="block font-script text-4xl sm:text-5xl text-blush-500 my-1">&amp;</span>
-              <span className="text-gold-gradient">{name2}</span>
-            </h1>
-          </motion.div>
-
-          {/* Floral divider */}
-          <motion.div variants={itemVariants} className="flex items-center justify-center">
-            <FloralDecoration />
-          </motion.div>
-
-          {/* Date & Venue */}
-          <motion.div variants={itemVariants} className="flex flex-col items-center gap-1">
-            <p className="font-serif text-lg text-gold-600 font-medium tracking-widest uppercase text-sm">
-              {weddingDate}
-            </p>
-            {venue && (
-              <p className="font-inter text-sm text-gray-500 tracking-wide">{venue}</p>
-            )}
-          </motion.div>
-
-          {/* Ornament divider */}
-          <motion.div variants={itemVariants} className="ornament-divider w-full max-w-xs">
-            <span className="text-gold-400 text-lg">✦</span>
-          </motion.div>
-
-          {/* Welcome message */}
-          <motion.p
-            variants={itemVariants}
-            className="font-inter text-gray-600 text-base sm:text-lg leading-relaxed max-w-xl"
-          >
-            {welcomeMessage}
-          </motion.p>
-
-          {/* Scroll cue */}
-          <motion.div
-            variants={itemVariants}
-            className="mt-4 flex flex-col items-center gap-2 text-gold-400"
-          >
-            <span className="font-inter text-xs uppercase tracking-widest text-gold-500">
-              Upload your photos below
+          <span className="flex-1 h-px w-10 bg-gradient-to-r from-transparent to-gold-400" />
+          <div className="flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M7 12S1 8.5 1 4.5a3 3 0 016 0 3 3 0 016 0C13 8.5 7 12 7 12Z"
+                stroke="#C9A84C"
+                strokeWidth="1.3"
+                fill="none"
+              />
+            </svg>
+            <span className="font-inter text-xs font-semibold tracking-[0.25em] uppercase text-gold-600">
+              Scan &amp; Snap
             </span>
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M10 4v12M4 10l6 6 6-6" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </motion.div>
-          </motion.div>
+          </div>
+          <span className="flex-1 h-px w-10 bg-gradient-to-l from-transparent to-gold-400" />
         </motion.div>
-      </div>
+
+        {/* ── WEDDING ── */}
+        <motion.p
+          variants={itemVariants}
+          className="font-serif text-4xl sm:text-5xl font-bold tracking-[0.25em] uppercase text-gold-gradient mb-1"
+        >
+          Wedding
+        </motion.p>
+
+        {/* ── "of" script ── */}
+        <motion.p
+          variants={itemVariants}
+          className="font-script text-3xl sm:text-4xl text-blush-500 leading-tight mb-1"
+        >
+          of
+        </motion.p>
+
+        {/* ── Couple name ── */}
+        <motion.h1
+          variants={itemVariants}
+          className="font-serif text-5xl sm:text-6xl md:text-7xl font-bold italic text-gray-800 leading-tight mb-5"
+        >
+          {name1} &amp; {name2}
+        </motion.h1>
+
+        {/* ── Date with dashes ── */}
+        <motion.div
+          variants={itemVariants}
+          className="flex items-center gap-3 mb-8"
+        >
+          <span className="w-8 h-px bg-gold-400" />
+          <span className="font-serif text-base sm:text-lg text-gold-600 italic tracking-wide">
+            {weddingDate}
+          </span>
+          <span className="w-8 h-px bg-gold-400" />
+        </motion.div>
+
+        {/* ── Welcome message ── */}
+        <motion.p
+          variants={itemVariants}
+          className="font-inter text-gray-700 font-semibold text-sm sm:text-base leading-relaxed max-w-sm"
+        >
+          {welcomeMessage}
+        </motion.p>
+      </motion.div>
     </header>
   );
 }

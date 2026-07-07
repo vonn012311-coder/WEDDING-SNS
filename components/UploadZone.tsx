@@ -30,7 +30,14 @@ function formatSize(bytes: number) {
 const ALLOWED_TYPES = weddingConfig.allowedMimeTypes;
 const MAX_BYTES = weddingConfig.maxUploadSizeMB * 1024 * 1024;
 
-// ── Upload Zone Component ─────────────────────────────────────
+// Cloud Upload Icon (matching the image style)
+const CloudUploadIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
+    <path d="M12 10v9M12 10l-3 3M12 10l3 3" />
+    <path d="M20.38 7.38A5.5 5.5 0 0 0 16 5.5a5.5 5.5 0 0 0-4.62 2.58A6 6 0 1 0 12 19.5h3" />
+  </svg>
+);
+
 export default function UploadZone() {
   const [files, setFiles] = useState<SelectedFile[]>([]);
   const [uploadState, setUploadState] = useState<UploadState>("idle");
@@ -49,7 +56,6 @@ export default function UploadZone() {
     const valid: SelectedFile[] = [];
 
     for (const file of fileArray) {
-      // Check MIME type
       const isValidType = ALLOWED_TYPES.some(
         (t) =>
           file.type === t ||
@@ -60,12 +66,10 @@ export default function UploadZone() {
         errors.push(`"${file.name}" is not a supported image format.`);
         continue;
       }
-      // Check size
       if (file.size > MAX_BYTES) {
         errors.push(`"${file.name}" exceeds the ${weddingConfig.maxUploadSizeMB}MB limit.`);
         continue;
       }
-      // Create preview (HEIC may not render in browser, use placeholder)
       const preview =
         file.type.startsWith("image/") && !file.type.includes("heic") && !file.type.includes("heif")
           ? URL.createObjectURL(file)
@@ -86,7 +90,6 @@ export default function UploadZone() {
     }
 
     setFiles((prev) => {
-      // Avoid duplicate filenames
       const existingNames = new Set(prev.map((f) => f.name));
       return [...prev, ...valid.filter((v) => !existingNames.has(v.name))];
     });
@@ -147,12 +150,10 @@ export default function UploadZone() {
         failedFiles.push(file.name);
       }
 
-      // Update progress after each file
       setProgress(Math.round(((i + 1) / total) * 100));
       setUploadedCount(i + 1);
     }
 
-    // Cleanup blob URLs
     files.forEach((f) => {
       if (f.preview.startsWith("blob:")) URL.revokeObjectURL(f.preview);
     });
@@ -160,7 +161,6 @@ export default function UploadZone() {
     if (successCount === total) {
       setUploadState("success");
     } else if (successCount > 0) {
-      // Partial success
       setUploadState("success");
       setErrorMessage(`${failedFiles.length} file(s) failed to upload: ${failedFiles.join(", ")}`);
     } else {
@@ -169,7 +169,6 @@ export default function UploadZone() {
     }
   };
 
-  // ── Reset ────────────────────────────────────────────────────
   const reset = () => {
     setFiles([]);
     setUploadState("idle");
@@ -178,7 +177,6 @@ export default function UploadZone() {
     setErrorMessage(null);
   };
 
-  // ── Render ───────────────────────────────────────────────────
   if (uploadState === "success") {
     return <SuccessScreen onUploadMore={reset} />;
   }
@@ -189,20 +187,10 @@ export default function UploadZone() {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 0.3 }}
-      className="max-w-2xl mx-auto px-4 pb-20"
+      className="max-w-xl mx-auto px-4 pb-12"
     >
-      <div className="glass-card rounded-4xl p-6 sm:p-8 shadow-wedding-lg">
-        {/* ── Section Header ── */}
-        <div className="text-center mb-6">
-          <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-gray-800 mb-1">
-            Share Your Memories
-          </h2>
-          <p className="font-inter text-sm text-gray-500">
-            JPG · PNG · HEIC &nbsp;•&nbsp; Max {weddingConfig.maxUploadSizeMB}MB each
-          </p>
-        </div>
-
-        {/* ── Drop Zone ── */}
+      {/* ── Main rounded card ── */}
+      <div className="bg-[#ede2c2]/35 border border-[#cfc08f]/30 rounded-3xl p-5 sm:p-6 shadow-wedding">
         <AnimatePresence>
           {uploadState === "idle" && (
             <motion.div
@@ -210,9 +198,10 @@ export default function UploadZone() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
+              {/* Inner upload drop zone */}
               <div
-                className={`upload-zone rounded-3xl p-8 sm:p-12 flex flex-col items-center gap-4 cursor-pointer transition-all ${
-                  isDragOver ? "drag-over" : ""
+                className={`border border-[#cfc08f]/40 rounded-2xl p-6 sm:p-10 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all ${
+                  isDragOver ? "bg-[#C9A84C]/5 border-[#C9A84C]" : "bg-white/40 hover:bg-white/60"
                 }`}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -223,24 +212,14 @@ export default function UploadZone() {
                 aria-label="Upload photos — click or drag and drop"
                 onKeyDown={(e) => e.key === "Enter" && galleryRef.current?.click()}
               >
-                {/* Camera icon */}
-                <motion.div
-                  animate={isDragOver ? { scale: 1.15, rotate: 5 } : { scale: 1, rotate: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold-100 to-blush-100 flex items-center justify-center shadow-card"
-                >
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M22 10l-2-3H12l-2 3H5a2 2 0 00-2 2v12a2 2 0 002 2h22a2 2 0 002-2V12a2 2 0 00-2-2h-5z" stroke="#C9A84C" strokeWidth="1.8" strokeLinejoin="round" />
-                    <circle cx="16" cy="18" r="4.5" stroke="#C9A84C" strokeWidth="1.8" />
-                    <circle cx="24" cy="13" r="1" fill="#C9A84C" />
-                  </svg>
-                </motion.div>
-
-                <div className="text-center">
-                  <p className="font-serif text-gray-700 text-lg font-medium">
-                    {isDragOver ? "Drop your photos here!" : "Drag & drop photos here"}
+                <div className="text-center flex flex-col items-center">
+                  <CloudUploadIcon />
+                  <p className="font-inter text-gray-700 text-sm font-semibold mt-3">
+                    Drag and drop your photos here
                   </p>
-                  <p className="font-inter text-gray-400 text-sm mt-1">or choose an option below</p>
+                  <p className="font-inter text-gray-400 text-xs mt-1">
+                    Supports PNG, JPG, JPEG, HEIC up to {weddingConfig.maxUploadSizeMB}MB
+                  </p>
                 </div>
 
                 {/* Hidden inputs */}
@@ -264,35 +243,35 @@ export default function UploadZone() {
                 />
               </div>
 
-              {/* Action buttons */}
-              <div className="grid grid-cols-2 gap-3 mt-4">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => galleryRef.current?.click()}
-                  id="gallery-btn"
-                  className="flex items-center justify-center gap-2 py-3.5 px-4 rounded-2xl bg-cream-100 border border-gold-200 text-gold-700 font-inter font-medium text-sm transition-all hover:bg-gold-50 hover:border-gold-400 hover:shadow-md"
-                >
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <rect x="2" y="2" width="14" height="14" rx="2.5" stroke="#C9A84C" strokeWidth="1.5" />
-                    <circle cx="6.5" cy="6.5" r="1.5" fill="#C9A84C" />
-                    <path d="M2 12l4-4 3 3 2-2 5 5" stroke="#C9A84C" strokeWidth="1.5" strokeLinejoin="round" />
-                  </svg>
-                  Gallery
-                </motion.button>
-
+              {/* Action buttons (Take Photo & Gallery) */}
+              <div className="grid grid-cols-2 gap-4 mt-5">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={(e) => { e.stopPropagation(); cameraRef.current?.click(); }}
                   id="camera-btn"
-                  className="flex items-center justify-center gap-2 py-3.5 px-4 rounded-2xl bg-cream-100 border border-blush-300 text-blush-600 font-inter font-medium text-sm transition-all hover:bg-blush-50 hover:border-blush-400 hover:shadow-md"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white border border-[#cfc08f]/20 text-gray-800 font-inter font-medium text-sm transition-all hover:bg-gray-50 shadow-sm"
                 >
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M13 6l-1-2H6L5 6H2a1 1 0 00-1 1v7a1 1 0 001 1h14a1 1 0 001-1V7a1 1 0 00-1-1h-3z" stroke="#E8A0B0" strokeWidth="1.5" strokeLinejoin="round" />
-                    <circle cx="9" cy="10" r="2.5" stroke="#E8A0B0" strokeWidth="1.5" />
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                    <circle cx="12" cy="13" r="4" />
                   </svg>
-                  Camera
+                  Take Photo
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => galleryRef.current?.click()}
+                  id="gallery-btn"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white border border-[#cfc08f]/20 text-gray-800 font-inter font-medium text-sm transition-all hover:bg-gray-50 shadow-sm"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                  </svg>
+                  Gallery
                 </motion.button>
               </div>
             </motion.div>
@@ -306,7 +285,7 @@ export default function UploadZone() {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              className="mt-4 px-4 py-3 rounded-2xl bg-red-50 border border-red-200 text-red-600 font-inter text-sm whitespace-pre-line"
+              className="mt-4 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-red-600 font-inter text-xs whitespace-pre-line"
               role="alert"
             >
               ⚠️ {errorMessage}
@@ -354,8 +333,8 @@ export default function UploadZone() {
               animate={{ opacity: 1 }}
               className="mt-4 text-center"
             >
-              <p className="text-red-500 font-inter mb-3">Something went wrong. Please try again.</p>
-              <button onClick={reset} className="btn-gold px-6 py-2.5 rounded-2xl text-sm">
+              <p className="text-red-500 font-inter text-sm mb-3">Something went wrong. Please try again.</p>
+              <button onClick={reset} className="btn-gold px-6 py-2.5 rounded-xl text-sm">
                 Try Again
               </button>
             </motion.div>
@@ -377,11 +356,12 @@ export default function UploadZone() {
                 whileTap={{ scale: 0.97 }}
                 onClick={handleUpload}
                 disabled={uploadState !== "idle"}
-                className="btn-gold w-full py-4 px-6 rounded-2xl font-inter font-semibold text-base tracking-wide shadow-wedding animate-pulse-gold flex items-center justify-center gap-3"
+                className="btn-gold w-full py-3.5 px-6 rounded-xl font-inter font-semibold text-sm tracking-wide shadow-wedding flex items-center justify-center gap-3"
               >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M10 3v10M10 3l-3 3M10 3l3 3" stroke="#5C4A08" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M3 13v2a2 2 0 002 2h10a2 2 0 002-2v-2" stroke="#5C4A08" strokeWidth="1.8" strokeLinecap="round" />
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5C4A08" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="3" x2="12" y2="15" />
                 </svg>
                 Upload {files.length} Photo{files.length !== 1 ? "s" : ""}
               </motion.button>
@@ -389,6 +369,41 @@ export default function UploadZone() {
           )}
         </AnimatePresence>
       </div>
+
+      {/* ── HOW IT WORKS Section ── */}
+      {uploadState === "idle" && (
+        <div className="mt-8 bg-[#ede2c2]/15 border border-[#cfc08f]/20 rounded-2xl p-5 shadow-sm text-center">
+          <h3 className="font-inter text-xs font-bold tracking-[0.2em] uppercase text-gold-600 mb-5">
+            HOW IT WORKS
+          </h3>
+          <div className="grid grid-cols-3 gap-3">
+            <div className="flex flex-col items-center">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#C9A84C] text-white text-xs font-bold mb-2">
+                1
+              </span>
+              <p className="font-inter text-[11px] font-semibold text-gray-700 leading-tight">
+                Snap or select photos
+              </p>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#C9A84C] text-white text-xs font-bold mb-2">
+                2
+              </span>
+              <p className="font-inter text-[11px] font-semibold text-gray-700 leading-tight">
+                Press Upload button
+              </p>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#C9A84C] text-white text-xs font-bold mb-2">
+                3
+              </span>
+              <p className="font-inter text-[11px] font-semibold text-gray-700 leading-tight">
+                Saved to our album!
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </motion.section>
   );
 }
