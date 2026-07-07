@@ -8,16 +8,16 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.14, delayChildren: 0.1 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
   },
 };
 
@@ -26,96 +26,108 @@ export default function Hero() {
   const [name1, name2] = coupleName.split(" & ");
 
   return (
-    <header className="relative overflow-hidden text-center">
-      {/* ── Background couple photo ── */}
-      <div className="relative w-full h-[420px] sm:h-[500px] md:h-[560px]">
-        <Image
-          src="/couple.png"
-          alt="Couple photo"
-          fill
-          className="object-cover object-center"
-          priority
-        />
+    <header className="relative w-full h-[100dvh] min-h-[600px] overflow-hidden">
+      {/* ── Full-screen background photo ── */}
+      <Image
+        src="/couple.png"
+        alt="Couple photo"
+        fill
+        className="object-cover object-top"
+        priority
+        sizes="100vw"
+      />
 
-        {/* Top cream gradient — makes title text readable */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FDFAF4]/90 via-[#FDFAF4]/20 to-[#FDFAF4]/80" />
+      {/* ── Gradient overlays for text readability ── */}
+      {/* Top overlay — title area */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/10 to-black/60" />
+      {/* Subtle cream tint */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#2a1f0a]/30 via-transparent to-[#1a1008]/50" />
 
-        {/* Text overlay — centered on the photo */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="absolute inset-0 flex flex-col items-center justify-center px-5 pt-8"
-        >
-          {/* ── "SCAN & SNAP" pill ── */}
-          <motion.div
-            variants={itemVariants}
-            className="flex items-center gap-3 mb-4"
-          >
-            <span className="flex-1 h-px w-8 bg-gradient-to-r from-transparent to-[#C9A84C]" />
+      {/* ── Content — split top and bottom ── */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="absolute inset-0 flex flex-col items-center justify-between px-6 py-12 text-center"
+      >
+        {/* ── TOP: Scan & Snap label + Wedding title ── */}
+        <div className="flex flex-col items-center">
+          {/* "SCAN & SNAP" pill */}
+          <motion.div variants={itemVariants} className="flex items-center gap-3 mb-5">
+            <span className="h-px w-10 bg-[#E8D5A3]/70" />
             <div className="flex items-center gap-1.5">
               <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
                 <path
                   d="M7 12S1 8.5 1 4.5a3 3 0 016 0 3 3 0 016 0C13 8.5 7 12 7 12Z"
-                  stroke="#C9A84C"
-                  strokeWidth="1.3"
+                  stroke="#E8D5A3"
+                  strokeWidth="1.4"
                   fill="none"
                 />
               </svg>
-              <span className="font-inter text-[10px] font-semibold tracking-[0.25em] uppercase text-[#C9A84C]">
+              <span className="font-inter text-[10px] font-semibold tracking-[0.28em] uppercase text-[#E8D5A3]">
                 Scan &amp; Snap
               </span>
             </div>
-            <span className="flex-1 h-px w-8 bg-gradient-to-l from-transparent to-[#C9A84C]" />
+            <span className="h-px w-10 bg-[#E8D5A3]/70" />
           </motion.div>
 
-          {/* ── WEDDING ── */}
+          {/* WEDDING */}
           <motion.p
             variants={itemVariants}
-            className="font-serif text-3xl sm:text-5xl font-bold tracking-[0.25em] uppercase text-[#C9A84C] mb-0.5"
+            className="font-serif text-3xl sm:text-5xl font-bold tracking-[0.3em] uppercase text-[#E8D5A3] mb-1 drop-shadow-lg"
           >
             Wedding
           </motion.p>
 
-          {/* ── "of" script ── */}
+          {/* of */}
           <motion.p
             variants={itemVariants}
-            className="font-script text-2xl sm:text-4xl text-[#C9A84C] leading-tight mb-0.5"
+            className="font-script text-2xl sm:text-4xl text-[#E8D5A3] leading-tight mb-2 drop-shadow-md"
           >
             of
           </motion.p>
+        </div>
 
-          {/* ── Couple name ── */}
+        {/* ── BOTTOM: Names + date + welcome ── */}
+        <div className="flex flex-col items-center">
+          {/* Couple name */}
           <motion.h1
             variants={itemVariants}
-            className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold italic text-gray-800 leading-tight mb-4 drop-shadow-sm"
+            className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold italic text-white leading-tight mb-4 drop-shadow-xl"
           >
             {name1} &amp; {name2}
           </motion.h1>
 
-          {/* ── Date ── */}
-          <motion.div
-            variants={itemVariants}
-            className="flex items-center gap-3"
-          >
-            <span className="w-6 h-px bg-[#C9A84C]/60" />
-            <span className="font-serif text-sm sm:text-base text-[#C9A84C] italic tracking-wide drop-shadow-sm">
+          {/* Date */}
+          <motion.div variants={itemVariants} className="flex items-center gap-3 mb-5">
+            <span className="w-8 h-px bg-[#E8D5A3]/60" />
+            <span className="font-serif text-sm sm:text-base text-[#E8D5A3] italic tracking-widest drop-shadow-sm">
               {weddingDate}
             </span>
-            <span className="w-6 h-px bg-[#C9A84C]/60" />
+            <span className="w-8 h-px bg-[#E8D5A3]/60" />
           </motion.div>
-        </motion.div>
-      </div>
 
-      {/* ── Welcome message — below the photo ── */}
-      <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.6 }}
-        className="font-inter text-slate-600 font-medium text-sm sm:text-base leading-relaxed max-w-sm mx-auto px-5 pt-6 pb-4"
-      >
-        {welcomeMessage}
-      </motion.p>
+          {/* Welcome message */}
+          <motion.p
+            variants={itemVariants}
+            className="font-inter text-white/80 text-xs sm:text-sm leading-relaxed max-w-xs drop-shadow-sm"
+          >
+            {welcomeMessage}
+          </motion.p>
+
+          {/* Scroll hint */}
+          <motion.div
+            variants={itemVariants}
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            className="mt-8"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8D5A3" strokeWidth="1.5" opacity="0.7">
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+          </motion.div>
+        </div>
+      </motion.div>
     </header>
   );
 }
