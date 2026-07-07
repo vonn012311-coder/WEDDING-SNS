@@ -26,104 +26,96 @@ export default function Hero() {
   const [name1, name2] = coupleName.split(" & ");
 
   return (
-    <header className="relative pt-14 pb-10 px-5 text-center">
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="flex flex-col items-center"
-      >
-        {/* ── "SCAN & SNAP" pill with heart ── */}
+    <header className="relative overflow-hidden text-center">
+      {/* ── Background couple photo ── */}
+      <div className="relative w-full h-[420px] sm:h-[500px] md:h-[560px]">
+        <Image
+          src="/couple.png"
+          alt="Couple photo"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+
+        {/* Top cream gradient — makes title text readable */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FDFAF4]/90 via-[#FDFAF4]/20 to-[#FDFAF4]/80" />
+
+        {/* Text overlay — centered on the photo */}
         <motion.div
-          variants={itemVariants}
-          className="flex items-center gap-3 mb-7"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="absolute inset-0 flex flex-col items-center justify-center px-5 pt-8"
         >
-          <span className="flex-1 h-px w-10 bg-gradient-to-r from-transparent to-[#C9A84C]" />
-          <div className="flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path
-                d="M7 12S1 8.5 1 4.5a3 3 0 016 0 3 3 0 016 0C13 8.5 7 12 7 12Z"
-                stroke="#C9A84C"
-                strokeWidth="1.3"
-                fill="none"
-              />
-            </svg>
-            <span className="font-inter text-xs font-semibold tracking-[0.25em] uppercase text-[#C9A84C]">
-              Scan &amp; Snap
+          {/* ── "SCAN & SNAP" pill ── */}
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-3 mb-4"
+          >
+            <span className="flex-1 h-px w-8 bg-gradient-to-r from-transparent to-[#C9A84C]" />
+            <div className="flex items-center gap-1.5">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                <path
+                  d="M7 12S1 8.5 1 4.5a3 3 0 016 0 3 3 0 016 0C13 8.5 7 12 7 12Z"
+                  stroke="#C9A84C"
+                  strokeWidth="1.3"
+                  fill="none"
+                />
+              </svg>
+              <span className="font-inter text-[10px] font-semibold tracking-[0.25em] uppercase text-[#C9A84C]">
+                Scan &amp; Snap
+              </span>
+            </div>
+            <span className="flex-1 h-px w-8 bg-gradient-to-l from-transparent to-[#C9A84C]" />
+          </motion.div>
+
+          {/* ── WEDDING ── */}
+          <motion.p
+            variants={itemVariants}
+            className="font-serif text-3xl sm:text-5xl font-bold tracking-[0.25em] uppercase text-[#C9A84C] mb-0.5"
+          >
+            Wedding
+          </motion.p>
+
+          {/* ── "of" script ── */}
+          <motion.p
+            variants={itemVariants}
+            className="font-script text-2xl sm:text-4xl text-[#C9A84C] leading-tight mb-0.5"
+          >
+            of
+          </motion.p>
+
+          {/* ── Couple name ── */}
+          <motion.h1
+            variants={itemVariants}
+            className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold italic text-gray-800 leading-tight mb-4 drop-shadow-sm"
+          >
+            {name1} &amp; {name2}
+          </motion.h1>
+
+          {/* ── Date ── */}
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-3"
+          >
+            <span className="w-6 h-px bg-[#C9A84C]/60" />
+            <span className="font-serif text-sm sm:text-base text-[#C9A84C] italic tracking-wide drop-shadow-sm">
+              {weddingDate}
             </span>
-          </div>
-          <span className="flex-1 h-px w-10 bg-gradient-to-l from-transparent to-[#C9A84C]" />
+            <span className="w-6 h-px bg-[#C9A84C]/60" />
+          </motion.div>
         </motion.div>
+      </div>
 
-        {/* ── WEDDING ── */}
-        <motion.p
-          variants={itemVariants}
-          className="font-serif text-4xl sm:text-5xl font-bold tracking-[0.25em] uppercase text-[#C9A84C] mb-1"
-        >
-          Wedding
-        </motion.p>
-
-        {/* ── "of" script ── */}
-        <motion.p
-          variants={itemVariants}
-          className="font-script text-3xl sm:text-4xl text-[#C9A84C] leading-tight mb-1"
-        >
-          of
-        </motion.p>
-
-        {/* ── Couple name ── */}
-        <motion.h1
-          variants={itemVariants}
-          className="font-serif text-5xl sm:text-6xl md:text-7xl font-bold italic text-gray-800 leading-tight mb-5"
-        >
-          {name1} &amp; {name2}
-        </motion.h1>
-
-        {/* ── Date with dashes ── */}
-        <motion.div
-          variants={itemVariants}
-          className="flex items-center gap-3 mb-8"
-        >
-          <span className="w-8 h-px bg-[#cfc08f]/50" />
-          <span className="font-serif text-base sm:text-lg text-[#C9A84C] italic tracking-wide">
-            {weddingDate}
-          </span>
-          <span className="w-8 h-px bg-[#cfc08f]/50" />
-        </motion.div>
-
-        {/* ── Couple Photo ── */}
-        <motion.div
-          variants={itemVariants}
-          className="relative w-full max-w-sm sm:max-w-md mb-8"
-        >
-          {/* Outer glow ring */}
-          <div className="absolute -inset-[5px] rounded-[28px] bg-gradient-to-br from-[#C9A84C] via-[#E8D5A3] to-[#C9A84C] opacity-60 blur-[2px]" />
-          {/* Inner gold border */}
-          <div className="absolute -inset-[2px] rounded-3xl border border-[#C9A84C]/50" />
-
-          {/* Photo */}
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-            <Image
-              src="/couple.png"
-              alt="Couple photo"
-              width={600}
-              height={400}
-              className="w-full h-[260px] sm:h-[320px] object-cover object-top"
-              priority
-            />
-            {/* Soft bottom vignette */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
-          </div>
-        </motion.div>
-
-        {/* ── Welcome message ── */}
-        <motion.p
-          variants={itemVariants}
-          className="font-inter text-slate-600 font-medium text-sm sm:text-base leading-relaxed max-w-sm"
-        >
-          {welcomeMessage}
-        </motion.p>
-      </motion.div>
+      {/* ── Welcome message — below the photo ── */}
+      <motion.p
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 0.6 }}
+        className="font-inter text-slate-600 font-medium text-sm sm:text-base leading-relaxed max-w-sm mx-auto px-5 pt-6 pb-4"
+      >
+        {welcomeMessage}
+      </motion.p>
     </header>
   );
 }
