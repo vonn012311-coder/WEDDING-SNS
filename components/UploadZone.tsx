@@ -267,7 +267,7 @@ export default function UploadZone() {
       transition={{ duration: 0.7, delay: 0.3 }}
       className="max-w-xl mx-auto px-4 pb-12"
     >
-      <div className="bg-[#ede2c2]/35 border border-[#cfc08f]/30 rounded-3xl p-5 sm:p-6 shadow-wedding">
+      <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-3xl p-5 sm:p-6 shadow-2xl">
         <AnimatePresence>
           {uploadState === "idle" && (
             <motion.div
@@ -276,8 +276,8 @@ export default function UploadZone() {
               exit={{ opacity: 0 }}
             >
               <div
-                className={`border border-[#cfc08f]/40 rounded-2xl p-6 sm:p-10 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all ${
-                  isDragOver ? "bg-[#C9A84C]/5 border-[#C9A84C]" : "bg-white/40 hover:bg-white/60"
+                className={`border rounded-2xl p-6 sm:p-10 flex flex-col items-center justify-center gap-3 cursor-pointer transition-all ${
+                  isDragOver ? "bg-white/30 border-[#E8D5A3]" : "bg-white/20 border-white/25 hover:bg-white/30"
                 }`}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -290,10 +290,10 @@ export default function UploadZone() {
               >
                 <div className="text-center flex flex-col items-center">
                   <CloudUploadIcon />
-                  <p className="font-inter text-slate-600 text-sm font-semibold mt-3">
+                  <p className="font-inter text-white text-sm font-semibold mt-3">
                     Drag and drop your photos here
                   </p>
-                  <p className="font-inter text-slate-400 text-xs mt-1">
+                  <p className="font-inter text-white/60 text-xs mt-1">
                     Supports PNG, JPG, JPEG, HEIC up to {weddingConfig.maxUploadSizeMB}MB
                   </p>
                 </div>
@@ -324,7 +324,7 @@ export default function UploadZone() {
                   whileTap={{ scale: 0.98 }}
                   onClick={(e) => { e.stopPropagation(); cameraRef.current?.click(); }}
                   id="camera-btn"
-                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white border border-[#cfc08f]/20 text-slate-700 font-inter font-medium text-sm transition-all hover:bg-gray-50 shadow-sm"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white text-slate-700 font-inter font-semibold text-sm transition-all hover:bg-white/90 shadow-md"
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
@@ -338,7 +338,7 @@ export default function UploadZone() {
                   whileTap={{ scale: 0.98 }}
                   onClick={() => galleryRef.current?.click()}
                   id="gallery-btn"
-                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white border border-[#cfc08f]/20 text-slate-700 font-inter font-medium text-sm transition-all hover:bg-gray-50 shadow-sm"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white text-slate-700 font-inter font-semibold text-sm transition-all hover:bg-white/90 shadow-md"
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -445,8 +445,8 @@ export default function UploadZone() {
       </div>
 
       {uploadState === "idle" && (
-        <div className="mt-8 bg-[#ede2c2]/15 border border-[#cfc08f]/20 rounded-2xl p-5 shadow-sm text-center">
-          <h3 className="font-inter text-xs font-bold tracking-[0.2em] uppercase text-[#C9A84C] mb-5">
+        <div className="mt-5 bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-5 text-center">
+          <h3 className="font-inter text-xs font-bold tracking-[0.2em] uppercase text-[#E8D5A3] mb-5">
             HOW IT WORKS
           </h3>
           <div className="grid grid-cols-3 gap-3">
@@ -454,7 +454,7 @@ export default function UploadZone() {
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#C9A84C] text-white text-xs font-bold mb-2">
                 1
               </span>
-              <p className="font-inter text-[11px] font-semibold text-slate-600 leading-tight">
+              <p className="font-inter text-[11px] font-semibold text-white/80 leading-tight">
                 Snap or select photos
               </p>
             </div>
@@ -462,7 +462,7 @@ export default function UploadZone() {
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#C9A84C] text-white text-xs font-bold mb-2">
                 2
               </span>
-              <p className="font-inter text-[11px] font-semibold text-slate-600 leading-tight">
+              <p className="font-inter text-[11px] font-semibold text-white/80 leading-tight">
                 Press Upload button
               </p>
             </div>
@@ -470,7 +470,7 @@ export default function UploadZone() {
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#C9A84C] text-white text-xs font-bold mb-2">
                 3
               </span>
-              <p className="font-inter text-[11px] font-semibold text-slate-600 leading-tight">
+              <p className="font-inter text-[11px] font-semibold text-white/80 leading-tight">
                 Saved to our album!
               </p>
             </div>
