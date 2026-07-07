@@ -14,7 +14,7 @@ export const weddingConfig = {
 
   // ── Messages ────────────────────────────────────────────────
   welcomeMessage:
-    "Thank you for celebrating this special day with us. Share your favorite moments by uploading your photos below — every snapshot is a treasure we'll cherish forever. 💛",
+    "Thank you for celebrating this special day with us. Share your favorite moments by uploading your photos below — every snapshot is a treasure we'll cherish forever.",
 
   // ── Google Drive ────────────────────────────────────────────
   // Paste the Google Drive Folder ID here.
@@ -35,13 +35,13 @@ export const weddingConfig = {
 
   // ── Thank-You Messages (shown randomly after upload) ────────
   thankYouMessages: [
-    "Thank you for capturing our special day! 📸",
-    "We're so grateful for your beautiful memories! 💛",
-    "Your photo will be treasured forever. Thank you! 🌸",
-    "Every picture tells our love story — thank you! 💍",
-    "You've made our wedding album extra special! ✨",
-    "With love and gratitude — thank you for sharing! 🥂",
-    "These moments are priceless. Thank you so much! 🌹",
-    "Your photo is now part of our forever story! 💕",
+    "Thank you for capturing our special day!",
+    "We're so grateful for your beautiful memories!",
+    "Your photo will be treasured forever. Thank you!",
+    "Every picture tells our love story — thank you!",
+    "You've made our wedding album extra special!",
+    "With love and gratitude — thank you for sharing!",
+    "These moments are priceless. Thank you so much!",
+    "Your photo is now part of our forever story!",
   ],
 };

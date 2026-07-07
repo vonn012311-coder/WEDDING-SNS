@@ -96,7 +96,7 @@ export default function SuccessScreen({ onUploadMore }: SuccessScreenProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="font-serif text-3xl sm:text-4xl font-bold text-gold-gradient mb-3"
+          className="font-serif text-3xl sm:text-4xl font-bold text-gray-800 mb-3"
         >
           Upload Successful!
         </motion.h2>
@@ -106,7 +106,7 @@ export default function SuccessScreen({ onUploadMore }: SuccessScreenProps) {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="mx-auto mb-5 h-px w-24 bg-gradient-to-r from-transparent via-gold-400 to-transparent"
+          className="mx-auto mb-5 h-px w-24 bg-gradient-to-r from-transparent via-[#cfc08f]/60 to-transparent"
         />
 
         {/* Thank-you message */}
@@ -114,7 +114,7 @@ export default function SuccessScreen({ onUploadMore }: SuccessScreenProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          className="font-serif text-lg sm:text-xl text-gray-700 italic mb-2 leading-relaxed"
+          className="font-serif text-lg sm:text-xl text-slate-600 italic mb-2 leading-relaxed"
         >
           &#8220;{messageRef.current}&#8221;
         </motion.p>
@@ -123,27 +123,27 @@ export default function SuccessScreen({ onUploadMore }: SuccessScreenProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.6 }}
-          className="font-inter text-sm text-gray-400 mb-8"
+          className="font-inter text-sm text-slate-500 mb-8"
         >
-          Your photo has been saved to our wedding album ✨
+          Your photo has been saved to our wedding album.
         </motion.p>
 
-        {/* Decorative hearts */}
+        {/* Decorative elements (No emojis) */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
           className="flex justify-center gap-3 mb-8"
         >
-          {["💛", "📸", "💍", "🌸", "✨"].map((emoji, i) => (
+          {["✦", "✿", "❀", "✦", "✧"].map((symbol, i) => (
             <motion.span
               key={i}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.8 + i * 0.08, type: "spring", stiffness: 300 }}
-              className="text-xl"
+              className="text-[#cfc08f] text-sm"
             >
-              {emoji}
+              {symbol}
             </motion.span>
           ))}
         </motion.div>
@@ -159,7 +159,7 @@ export default function SuccessScreen({ onUploadMore }: SuccessScreenProps) {
           onClick={onUploadMore}
           className="btn-gold w-full sm:w-auto px-10 py-4 rounded-2xl font-inter font-semibold text-base tracking-wide shadow-wedding"
         >
-          📸 Upload More Photos
+          Upload More Photos
         </motion.button>
       </div>
     </motion.div>

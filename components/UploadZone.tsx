@@ -290,10 +290,10 @@ export default function UploadZone() {
               >
                 <div className="text-center flex flex-col items-center">
                   <CloudUploadIcon />
-                  <p className="font-inter text-gray-700 text-sm font-semibold mt-3">
+                  <p className="font-inter text-slate-600 text-sm font-semibold mt-3">
                     Drag and drop your photos here
                   </p>
-                  <p className="font-inter text-gray-400 text-xs mt-1">
+                  <p className="font-inter text-slate-400 text-xs mt-1">
                     Supports PNG, JPG, JPEG, HEIC up to {weddingConfig.maxUploadSizeMB}MB
                   </p>
                 </div>
@@ -324,7 +324,7 @@ export default function UploadZone() {
                   whileTap={{ scale: 0.98 }}
                   onClick={(e) => { e.stopPropagation(); cameraRef.current?.click(); }}
                   id="camera-btn"
-                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white border border-[#cfc08f]/20 text-gray-800 font-inter font-medium text-sm transition-all hover:bg-gray-50 shadow-sm"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white border border-[#cfc08f]/20 text-slate-700 font-inter font-medium text-sm transition-all hover:bg-gray-50 shadow-sm"
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
@@ -338,7 +338,7 @@ export default function UploadZone() {
                   whileTap={{ scale: 0.98 }}
                   onClick={() => galleryRef.current?.click()}
                   id="gallery-btn"
-                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white border border-[#cfc08f]/20 text-gray-800 font-inter font-medium text-sm transition-all hover:bg-gray-50 shadow-sm"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white border border-[#cfc08f]/20 text-slate-700 font-inter font-medium text-sm transition-all hover:bg-gray-50 shadow-sm"
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -358,10 +358,15 @@ export default function UploadZone() {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              className="mt-4 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-red-600 font-inter text-xs whitespace-pre-line"
+              className="mt-4 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-red-600 font-inter text-xs flex items-start gap-2 whitespace-pre-line"
               role="alert"
             >
-              ⚠️ {errorMessage}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="mt-0.5 shrink-0">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              <span>{errorMessage}</span>
             </motion.div>
           )}
         </AnimatePresence>
@@ -441,7 +446,7 @@ export default function UploadZone() {
 
       {uploadState === "idle" && (
         <div className="mt-8 bg-[#ede2c2]/15 border border-[#cfc08f]/20 rounded-2xl p-5 shadow-sm text-center">
-          <h3 className="font-inter text-xs font-bold tracking-[0.2em] uppercase text-gold-600 mb-5">
+          <h3 className="font-inter text-xs font-bold tracking-[0.2em] uppercase text-[#C9A84C] mb-5">
             HOW IT WORKS
           </h3>
           <div className="grid grid-cols-3 gap-3">
@@ -449,7 +454,7 @@ export default function UploadZone() {
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#C9A84C] text-white text-xs font-bold mb-2">
                 1
               </span>
-              <p className="font-inter text-[11px] font-semibold text-gray-700 leading-tight">
+              <p className="font-inter text-[11px] font-semibold text-slate-600 leading-tight">
                 Snap or select photos
               </p>
             </div>
@@ -457,7 +462,7 @@ export default function UploadZone() {
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#C9A84C] text-white text-xs font-bold mb-2">
                 2
               </span>
-              <p className="font-inter text-[11px] font-semibold text-gray-700 leading-tight">
+              <p className="font-inter text-[11px] font-semibold text-slate-600 leading-tight">
                 Press Upload button
               </p>
             </div>
@@ -465,7 +470,7 @@ export default function UploadZone() {
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#C9A84C] text-white text-xs font-bold mb-2">
                 3
               </span>
-              <p className="font-inter text-[11px] font-semibold text-gray-700 leading-tight">
+              <p className="font-inter text-[11px] font-semibold text-slate-600 leading-tight">
                 Saved to our album!
               </p>
             </div>

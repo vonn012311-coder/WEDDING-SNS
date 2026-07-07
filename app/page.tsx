@@ -18,7 +18,7 @@ export default function Home() {
               fontSize: `${14 + (i % 3) * 6}px`,
             }}
           >
-            {["🌸", "✿", "❀", "🌺", "✦", "❋"][i]}
+            {["✦", "✿", "❀", "✦", "❋", "✧"][i]}
           </span>
         ))}
       </div>
@@ -32,7 +32,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="text-center pb-10 px-4">
         <p className="font-inter text-xs text-gray-400">
-          Made with 💛 for your special day · Scan &amp; Snap
+          Made with love for your special day · Scan &amp; Snap
         </p>
       </footer>
     </main>

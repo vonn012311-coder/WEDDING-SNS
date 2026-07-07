@@ -47,17 +47,17 @@ export default function Hero() {
                 fill="none"
               />
             </svg>
-            <span className="font-inter text-xs font-semibold tracking-[0.25em] uppercase text-gold-600">
+            <span className="font-inter text-xs font-semibold tracking-[0.25em] uppercase text-[#C9A84C]">
               Scan &amp; Snap
             </span>
           </div>
-          <span className="flex-1 h-px w-10 bg-gradient-to-l from-transparent to-gold-400" />
+          <span className="flex-1 h-px w-10 bg-gradient-to-l from-transparent to-[#C9A84C]" />
         </motion.div>
 
         {/* ── WEDDING ── */}
         <motion.p
           variants={itemVariants}
-          className="font-serif text-4xl sm:text-5xl font-bold tracking-[0.25em] uppercase text-gold-gradient mb-1"
+          className="font-serif text-4xl sm:text-5xl font-bold tracking-[0.25em] uppercase text-[#C9A84C] mb-1"
         >
           Wedding
         </motion.p>
@@ -65,7 +65,7 @@ export default function Hero() {
         {/* ── "of" script ── */}
         <motion.p
           variants={itemVariants}
-          className="font-script text-3xl sm:text-4xl text-blush-500 leading-tight mb-1"
+          className="font-script text-3xl sm:text-4xl text-[#d4a8b3] leading-tight mb-1"
         >
           of
         </motion.p>
@@ -83,17 +83,17 @@ export default function Hero() {
           variants={itemVariants}
           className="flex items-center gap-3 mb-8"
         >
-          <span className="w-8 h-px bg-gold-400" />
-          <span className="font-serif text-base sm:text-lg text-gold-600 italic tracking-wide">
+          <span className="w-8 h-px bg-[#cfc08f]/50" />
+          <span className="font-serif text-base sm:text-lg text-[#C9A84C] italic tracking-wide">
             {weddingDate}
           </span>
-          <span className="w-8 h-px bg-gold-400" />
+          <span className="w-8 h-px bg-[#cfc08f]/50" />
         </motion.div>
 
         {/* ── Welcome message ── */}
         <motion.p
           variants={itemVariants}
-          className="font-inter text-gray-700 font-semibold text-sm sm:text-base leading-relaxed max-w-sm"
+          className="font-inter text-slate-600 font-medium text-sm sm:text-base leading-relaxed max-w-sm"
         >
           {welcomeMessage}
         </motion.p>
